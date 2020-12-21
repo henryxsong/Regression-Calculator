@@ -3,7 +3,7 @@
 #
 # Professor: Dr. Zou
 
-import math
+import numpy as np
 
 global size
 global m11, m12, m13, m14
@@ -12,6 +12,18 @@ global m31, m32, m33, m34
 global l0, l1, l2, l3
 global a, b, c
 global slope, y_intercept
+
+# Calculates the Exponential Regression Line
+# @param x - list of integer values representing data on the x-axis
+# @param y - list of integer values representing data on the y-axis
+def find_exponential_regression(x, y):
+    linearalized = convert_exponential_to_linear(y)
+    find_linear_regression(x, linearalized)
+
+    global a, b, c, slope, y_intercept
+    b = slope
+    c = y_intercept
+    a = np.exp(c)
 
 
 # Calculates the Quadratic Regression Line
@@ -96,7 +108,16 @@ def find_linear_regression(x, y):
     y_intercept = l2/float(l0)
 
 
+# Calculates Future Predictions Exponential Regression Line
+# Y(x; a,b) = a*e^(bx)
+# @param _a - variable a of exponential equation
+# @param _b - variable b of exponential equation
+# @param i - x value
+def find_future_exponential_prediction(_a, _b, i):
+    print("Year", i, " : ", '%.4f' % (_a * np.exp(_b * i)))
+
 # Calculates Future Predictions Quadratic Regression Line
+# y = ax^2 + bx + c
 # @param _a - variable a of quadratic equation
 # @param _b - variable b of quadratic equation
 # @param _c - variable c of quadratic equation
@@ -106,6 +127,7 @@ def find_future_quad_prediction(_a, _b, _c, i):
 
 
 # Calculates Future Predictions Linear Regression Line
+# y = mx + b
 # @param m - slope of line
 # @param b - y-intercept of line
 # @param i - x value
@@ -179,6 +201,16 @@ def power_vector(data_in, exp):
     return out
 
 
+# Converts exponential values into linear values (utilizing natural log)
+# @param array - array of values to be converted
+# @return list of converted values
+def convert_exponential_to_linear(array):
+    converted_output = []
+    for x in array:
+        converted_output.append(np.log(x))
+    return converted_output
+
+
 # Print data values of a vector
 # @param data - vector of y-axis values
 def print_data(data):
@@ -231,41 +263,63 @@ def print_quadratic():
         find_future_quad_prediction(a, b, c, n + size + 1)
 
 
+# Prints exponential-related data values, calculations, and predictions
+def print_exponential():
+    print()
+    print("Exponential Formula:")
+    print("Y(x; a,b) = a * e^(bx) where:")
+    print("a = ", '%.4f' % a)
+    print("b = ", '%.4f' % b)
+    print("Giving us: Y(x; a,b) = ", '%.4f' % a, " * e^(", '%.4f' % b, "* x)")
+    print()
+    print("Future Predictions:")
+    for n in range(5):
+        find_future_exponential_prediction(a, b, n + size + 1)
+
+
 if __name__ == '__main__':
     print("Linear, Quadratic, & Exponential Regression Algorithms [written in Python]")
     print("By Henry Song")
     print()
 
-    print("Enter 1 to use hard-coded data for average annual temperatures from 2008 to 2018")
+    print("Enter 1 to use hard-coded data for Guam's COVID cases from March-December")
     print("Enter 2 to use user-input data")
-    option = int(input("Select option: "))
+    data_option = int(input("Select option: "))
     print()
 
     print("Enter 1 to calculate Linear Regression")
     print("Enter 2 to calculate Quadratic Regression")
-    option_2 = int(input("Select option: "))
+    print("Enter 3 to calculate Exponential Regression")
+    method_option = int(input("Select option: "))
     print()
 
-    if option == 1:
-        xData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-        yData = [27.8, 27.8, 27.8, 27.8, 27.8, 28.3, 28.1, 27.8, 28.4, 28.2, 28.5]
+    if data_option == 1:
+        xData = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        yData = [71, 142, 167, 259, 354, 1442, 2550, 4761, 6889]
         size = len(xData)
+        print()
         print_data(yData)
-        if option_2 == 1:
+        if method_option == 1:
             find_linear_regression(xData, yData)
             print_linear()
-        elif option_2 == 2:
+        elif method_option == 2:
             find_quadratic_regression(xData, yData)
             print_quadratic()
-    elif option == 2:
+        elif method_option == 3:
+            find_exponential_regression(xData, yData)
+            print_exponential()
+    elif data_option == 2:
         yData = list(read_data())
         xData = list(find_x_data(len(yData)))
         size = len(xData)
         print()
         print_data(yData)
-        if option_2 == 1:
+        if method_option == 1:
             find_linear_regression(xData, yData)
             print_linear()
-        elif option_2 == 2:
+        elif method_option == 2:
             find_quadratic_regression(xData, yData)
             print_quadratic()
+        elif method_option == 3:
+            find_exponential_regression(xData, yData)
+            print_exponential()
