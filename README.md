@@ -1,6 +1,5 @@
 # Linear-Quadratic-Exponential-Regression
 
-About:
 Python program designed to utilize linear, quadratic and/or exponential regression methods to produce a corresponding formula and a 5-unit prediction. Both 
 linear and quadratic regression methods use linear algebra, specifically Cramer's Rule, to calculate formulas.
 
