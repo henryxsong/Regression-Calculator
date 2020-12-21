@@ -8,6 +8,9 @@
 *.so
 *.xml
 *.iml
+venv/
+.idea/
+exportToHTML/
 
 # Packages #
 ############
