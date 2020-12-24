@@ -3,7 +3,9 @@
 #
 # Professor: Dr. Zou
 
+import sys
 import numpy as np
+from covidtracking import CovidTracking
 
 global size
 global m11, m12, m13, m14
@@ -12,6 +14,7 @@ global m31, m32, m33, m34
 global l0, l1, l2, l3
 global a, b, c
 global slope, y_intercept
+
 
 # Calculates the Exponential Regression Line
 # @param x - list of integer values representing data on the x-axis
@@ -115,6 +118,7 @@ def find_linear_regression(x, y):
 # @param i - x value
 def find_future_exponential_prediction(_a, _b, i):
     print("Year", i, " : ", '%.4f' % (_a * np.exp(_b * i)))
+
 
 # Calculates Future Predictions Quadratic Regression Line
 # y = ax^2 + bx + c
@@ -284,6 +288,7 @@ if __name__ == '__main__':
 
     print("Enter 1 to use hard-coded data for Guam's COVID cases from March-December")
     print("Enter 2 to use user-input data")
+    print("Enter 3 to CovidTracking.com API data")
     data_option = int(input("Select option: "))
     print()
 
