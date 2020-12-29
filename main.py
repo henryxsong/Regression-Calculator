@@ -5,7 +5,7 @@
 
 import sys
 import numpy as np
-from covidtracking import CovidTracking
+# from covidtracking import CovidTracking
 
 global size
 global m11, m12, m13, m14
@@ -117,7 +117,7 @@ def find_linear_regression(x, y):
 # @param _b - variable b of exponential equation
 # @param i - x value
 def find_future_exponential_prediction(_a, _b, i):
-    print("Year", i, " : ", '%.4f' % (_a * np.exp(_b * i)))
+    print(" ", i, " : ", '%.4f' % (_a * np.exp(_b * i)))
 
 
 # Calculates Future Predictions Quadratic Regression Line
@@ -127,7 +127,7 @@ def find_future_exponential_prediction(_a, _b, i):
 # @param _c - variable c of quadratic equation
 # @param i - x value
 def find_future_quad_prediction(_a, _b, _c, i):
-    print("Year", i, " : ", '%.4f' % (_a * pow(i, 2) + _b * i + _c))
+    print(" ", i, " : ", '%.4f' % (_a * pow(i, 2) + _b * i + _c))
 
 
 # Calculates Future Predictions Linear Regression Line
@@ -136,7 +136,7 @@ def find_future_quad_prediction(_a, _b, _c, i):
 # @param b - y-intercept of line
 # @param i - x value
 def find_future_linear_prediction(_m, _b, _i):
-    print("Year", _i, " : ", '%.4f' % (_m*_i+_b))
+    print(" ", _i, " : ", '%.4f' % (_m*_i+_b))
 
 
 # Reads data from the user. The user can enter data without declaring the number of data entries.
@@ -219,9 +219,10 @@ def convert_exponential_to_linear(array):
 # @param data - vector of y-axis values
 def print_data(data):
     print("Given Data: ")
+    print("  x  |  y")
     i = 1
     for x in data:
-        print("Year ", i, " : ", x)
+        print(" ", i, " : ", x)
         i = i + 1
 
 
@@ -240,6 +241,8 @@ def print_linear():
     print("Y-Intercept(b) = ", '%.4f' % y_intercept)
 
     print()
+    print("Future Predictions:")
+    print("  x  |  y")
     for n in range(5):
         find_future_linear_prediction(slope, y_intercept, n + size + 1)
 
@@ -262,7 +265,8 @@ def print_quadratic():
     print("f(x) = ", '%.4f' % a, "*x^2 + ", '%.4f' % b, "*x + ", '%.4f' % c)
     print()
 
-    print("Future Predictions")
+    print("Future Predictions:")
+    print("  x  |  y")
     for n in range(5):
         find_future_quad_prediction(a, b, c, n + size + 1)
 
@@ -271,12 +275,13 @@ def print_quadratic():
 def print_exponential():
     print()
     print("Exponential Formula:")
-    print("Y(x; a,b) = a * e^(bx) where:")
+    print("Y(x; a,b) = a * e^(bx), where:")
     print("a = ", '%.4f' % a)
     print("b = ", '%.4f' % b)
     print("Giving us: Y(x; a,b) = ", '%.4f' % a, " * e^(", '%.4f' % b, "* x)")
     print()
     print("Future Predictions:")
+    print("  x  |  y")
     for n in range(5):
         find_future_exponential_prediction(a, b, n + size + 1)
 
@@ -288,7 +293,7 @@ if __name__ == '__main__':
 
     print("Enter 1 to use hard-coded data for Guam's COVID cases from March-December")
     print("Enter 2 to use user-input data")
-    print("Enter 3 to CovidTracking.com API data")
+    # print("Enter 3 to CovidTracking.com API data")
     data_option = int(input("Select option: "))
     print()
 
@@ -299,10 +304,24 @@ if __name__ == '__main__':
     print()
 
     if data_option == 1:
+        if method_option == 1:
+            print("Using Linear Regression on Guam's COVID cases from March-December:")
+        elif method_option == 2:
+            print("Using Quadratic Regression on Guam's COVID cases from March-December:")
+        elif method_option == 3:
+            print("Using Exponential Regression on Guam's COVID cases from March-December:")
+    elif data_option == 2:
+        if method_option == 1:
+            print("Using Linear Regression on user-entered data:")
+        elif method_option == 2:
+            print("Using Quadratic Regression on user-entered data:")
+        elif method_option == 3:
+            print("Using Exponential Regression on user-entered data:")
+
+    if data_option == 1:
         xData = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         yData = [71, 142, 167, 259, 354, 1442, 2550, 4761, 6889]
         size = len(xData)
-        print()
         print_data(yData)
         if method_option == 1:
             find_linear_regression(xData, yData)
@@ -317,7 +336,6 @@ if __name__ == '__main__':
         yData = list(read_data())
         xData = list(find_x_data(len(yData)))
         size = len(xData)
-        print()
         print_data(yData)
         if method_option == 1:
             find_linear_regression(xData, yData)
