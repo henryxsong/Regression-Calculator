@@ -360,7 +360,11 @@ if __name__ == '__main__':
         elif method_option == 3:
             find_exponential_regression(xData, yData)
             print_exponential()
-        plot_data(xData, yData, plot_title)
+        
+        plot_option = str(input("Plot data (y/n): "))
+        while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
+        if plot_option[0] == "y":
+            plot_data(xData, yData, plot_title)
     elif data_option == 2:
         yData = np.asarray(list(read_data()))
         xData = np.asarray(list(find_x_data(len(yData))))
@@ -376,4 +380,8 @@ if __name__ == '__main__':
         elif method_option == 3:
             find_exponential_regression(xData, yData)
             print_exponential()
-        plot_data(xData, yData, plot_title)
+
+        plot_option = str(input("Plot data (y/n): "))
+        while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
+        if plot_option[0] == "y":
+            plot_data(xData, yData, plot_title)
