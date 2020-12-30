@@ -3,10 +3,14 @@
 #
 # Professor: Dr. Zou
 
+# Import Statements
 import sys
 import numpy as np
+import matplotlib.pyplot as plt
 # from covidtracking import CovidTracking
 
+
+# Global Variables
 global size
 global m11, m12, m13, m14
 global m21, m22, m23, m24
@@ -16,7 +20,7 @@ global a, b, c
 global slope, y_intercept
 
 
-# Calculates the Exponential Regression Line
+# Calculates the values of an Exponential Regression Line equation
 # @param x - list of integer values representing data on the x-axis
 # @param y - list of integer values representing data on the y-axis
 def find_exponential_regression(x, y):
@@ -29,7 +33,7 @@ def find_exponential_regression(x, y):
     a = np.exp(c)
 
 
-# Calculates the Quadratic Regression Line
+# Calculates the values of a Quadratic Regression Line equation
 # @param x - list of integer values representing data on the x-axis
 # @param y - list of integer values representing data on the y-axis
 def find_quadratic_regression(x, y):
@@ -81,7 +85,7 @@ def find_quadratic_regression(x, y):
     c = l3 / l0
 
 
-# Calculates the Linear Regression Line
+# Calculates the values of a Linear Regression Line equation
 # @param x - list of integer values representing data on the x-axis
 # @param y - list of integer values representing data on the y-axis
 def find_linear_regression(x, y):
@@ -111,32 +115,32 @@ def find_linear_regression(x, y):
     y_intercept = l2/float(l0)
 
 
-# Calculates Future Predictions Exponential Regression Line
+# Calculates exponential prediction
 # Y(x; a,b) = a*e^(bx)
 # @param _a - variable a of exponential equation
 # @param _b - variable b of exponential equation
 # @param i - x value
-def find_future_exponential_prediction(_a, _b, i):
-    print(" ", i, " : ", '%.4f' % (_a * np.exp(_b * i)))
+def exponential_function(_a, _b, i):
+    return (_a * np.exp(_b * i))
 
 
-# Calculates Future Predictions Quadratic Regression Line
+# Calculates quadratic prediction
 # y = ax^2 + bx + c
 # @param _a - variable a of quadratic equation
 # @param _b - variable b of quadratic equation
 # @param _c - variable c of quadratic equation
 # @param i - x value
-def find_future_quad_prediction(_a, _b, _c, i):
-    print(" ", i, " : ", '%.4f' % (_a * pow(i, 2) + _b * i + _c))
+def quadratic_function(_a, _b, _c, i):
+    return (_a * pow(i, 2) + _b * i + _c)
 
 
-# Calculates Future Predictions Linear Regression Line
+# Calculates linear prediction
 # y = mx + b
 # @param m - slope of line
 # @param b - y-intercept of line
 # @param i - x value
-def find_future_linear_prediction(_m, _b, _i):
-    print(" ", _i, " : ", '%.4f' % (_m*_i+_b))
+def linear_function(_m, _b, _i):
+    return (_m*_i+_b)
 
 
 # Reads data from the user. The user can enter data without declaring the number of data entries.
@@ -215,6 +219,20 @@ def convert_exponential_to_linear(array):
     return converted_output
 
 
+# Uses MatPlotLib to visualize dataset
+# @param xData_in - input data of x-values (utilizes numpy array data structure)
+# @param yData_in - input data of y-values (utilizes numpy array data structure)
+def plot_data(xData_in, yData_in, _title):
+    plt.plot(xData_in, yData_in, 'bo')
+    plt.plot(xData_in, yData_in, 'b-')
+    #plt.scatter(xData_in, yData_in, label='Age vs Height')
+    plt.title(_title)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    #plt.legend()
+    plt.show()
+    
+
 # Print data values of a vector
 # @param data - vector of y-axis values
 def print_data(data):
@@ -244,7 +262,7 @@ def print_linear():
     print("Future Predictions:")
     print("  x  |  y")
     for n in range(5):
-        find_future_linear_prediction(slope, y_intercept, n + size + 1)
+        print(" ", n + size + 1, " : ", '%.4f' % linear_function(slope, y_intercept, n + size + 1))
 
 
 # Prints quadratic-related data values, calculations, and predictions
@@ -268,7 +286,7 @@ def print_quadratic():
     print("Future Predictions:")
     print("  x  |  y")
     for n in range(5):
-        find_future_quad_prediction(a, b, c, n + size + 1)
+        print(" ", n + size + 1, " : ", '%.4f' % quadratic_function(a, b, c, n + size + 1))
 
 
 # Prints exponential-related data values, calculations, and predictions
@@ -283,7 +301,7 @@ def print_exponential():
     print("Future Predictions:")
     print("  x  |  y")
     for n in range(5):
-        find_future_exponential_prediction(a, b, n + size + 1)
+        print(" ", n + size + 1, " : ", '%.4f' % exponential_function(a, b, n + size + 1))
 
 
 if __name__ == '__main__':
@@ -295,32 +313,42 @@ if __name__ == '__main__':
     print("Enter 2 to use user-input data")
     # print("Enter 3 to CovidTracking.com API data")
     data_option = int(input("Select option: "))
+    while data_option > 2 or data_option < 1: data_option = int(input("Please enter valid option: "))
     print()
 
     print("Enter 1 to calculate Linear Regression")
     print("Enter 2 to calculate Quadratic Regression")
     print("Enter 3 to calculate Exponential Regression")
     method_option = int(input("Select option: "))
+    while method_option > 3 or method_option < 1: method_option = int(input("Please enter valid option: "))
     print()
+
+    plot_title = ""
 
     if data_option == 1:
         if method_option == 1:
             print("Using Linear Regression on Guam's COVID cases from March-December:")
+            plot_title = "Guam's COVID cases from March-December, linear regression"
         elif method_option == 2:
             print("Using Quadratic Regression on Guam's COVID cases from March-December:")
+            plot_title = "Guam's COVID cases from March-December, quadratic regression"
         elif method_option == 3:
             print("Using Exponential Regression on Guam's COVID cases from March-December:")
+            plot_title = "Guam's COVID cases from March-December, exponential regression"
     elif data_option == 2:
         if method_option == 1:
             print("Using Linear Regression on user-entered data:")
+            plot_title = "User-Entered Data, linear regression"
         elif method_option == 2:
             print("Using Quadratic Regression on user-entered data:")
+            plot_title = "User-Entered Data, quadratic regression"
         elif method_option == 3:
             print("Using Exponential Regression on user-entered data:")
+            plot_title = "User-Entered Data, exponential regression"
 
     if data_option == 1:
-        xData = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        yData = [71, 142, 167, 259, 354, 1442, 2550, 4761, 6889]
+        xData = np.asarray([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        yData = np.asarray([71, 142, 167, 259, 354, 1442, 2550, 4763, 6902])
         size = len(xData)
         print_data(yData)
         if method_option == 1:
@@ -332,10 +360,12 @@ if __name__ == '__main__':
         elif method_option == 3:
             find_exponential_regression(xData, yData)
             print_exponential()
+        plot_data(xData, yData, plot_title)
     elif data_option == 2:
-        yData = list(read_data())
-        xData = list(find_x_data(len(yData)))
+        yData = np.asarray(list(read_data()))
+        xData = np.asarray(list(find_x_data(len(yData))))
         size = len(xData)
+        print()
         print_data(yData)
         if method_option == 1:
             find_linear_regression(xData, yData)
@@ -346,3 +376,4 @@ if __name__ == '__main__':
         elif method_option == 3:
             find_exponential_regression(xData, yData)
             print_exponential()
+        plot_data(xData, yData, plot_title)
