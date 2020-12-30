@@ -5,6 +5,7 @@ linear and quadratic regression methods use linear algebra, specifically Cramer'
 
 Dependencies:
 - NumPy
+- MatPlotLib
 
 Usage:
 - open terminal and navigate to containing
