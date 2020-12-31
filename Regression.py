@@ -171,9 +171,9 @@ def read_data():
 # Finds corresponding x-axis values
 # @param s - Size of list
 # @return list of x-axis values
-def find_x_data(s):
+def find_x_data(s, add_on):
     array = []
-    for i in range(s):
+    for i in range(s + add_on):
         array.append(i+1)
     return array
 
@@ -219,17 +219,32 @@ def convert_exponential_to_linear(array):
     return converted_output
 
 
+# Calculates regression line using respective algorithm
+def find_regression_line(xData_in, yData_in, option):
+    array = []
+    if option == 1:
+        for i in range(len(xData_in)):
+            array.append(linear_function(slope, y_intercept, i))
+    elif option == 2:
+        for i in range(len(xData_in)):
+            array.append(quadratic_function(a, b, c, i))
+    elif option == 3:
+        for i in range(len(xData_in)):
+            array.append(exponential_function(a, b, i))
+    return np.asarray(array)
+
+
 # Uses MatPlotLib to visualize dataset
 # @param xData_in - input data of x-values (utilizes numpy array data structure)
 # @param yData_in - input data of y-values (utilizes numpy array data structure)
-def plot_data(xData_in, yData_in, _title):
+def plot_data(xData_in, xData_predictions, yData_in, yData_predictions, _title):
     plt.plot(xData_in, yData_in, 'bo')
-    plt.plot(xData_in, yData_in, 'b-')
-    #plt.scatter(xData_in, yData_in, label='Age vs Height')
+    plt.plot(xData_in, yData_in, 'b-', label='Original')
+    plt.plot(xData_predictions, yData_predictions, 'ro', label='Regression Line')
     plt.title(_title)
     plt.xlabel('x')
     plt.ylabel('y')
-    #plt.legend()
+    plt.legend()
     plt.show()
     
 
@@ -361,13 +376,16 @@ if __name__ == '__main__':
             find_exponential_regression(xData, yData)
             print_exponential()
         
+        xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
+        yData_predictions = find_regression_line(xData_predictions, yData, method_option)
+
         plot_option = str(input("Plot data (y/n): "))
         while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
         if plot_option[0] == "y":
-            plot_data(xData, yData, plot_title)
+            plot_data(xData, xData_predictions, yData, yData_predictions, plot_title)
     elif data_option == 2:
         yData = np.asarray(list(read_data()))
-        xData = np.asarray(list(find_x_data(len(yData))))
+        xData = np.asarray(list(find_x_data(len(yData), 0)))
         size = len(xData)
         print()
         print_data(yData)
@@ -381,7 +399,10 @@ if __name__ == '__main__':
             find_exponential_regression(xData, yData)
             print_exponential()
 
+        xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
+        yData_predictions = find_regression_line(xData_predictions, yData, method_option)
+
         plot_option = str(input("Plot data (y/n): "))
         while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
         if plot_option[0] == "y":
-            plot_data(xData, yData, plot_title)
+            plot_data(xData, xData_predictions, yData, yData_predictions, plot_title)
