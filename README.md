@@ -1,7 +1,6 @@
-# Linear-Quadratic-Exponential-Logarithmic-Regression
+# Regression Calculator
 
-Python program designed to utilize linear, quadratic and/or exponential regression methods to produce a corresponding formula and a 5-unit prediction. Both 
-linear and quadratic regression methods use linear algebra, specifically Cramer's Rule, to calculate formulas.
+Python program designed to utilize linear, quadratic, exponential, and/or logarithmic regression methods to produce a corresponding formula and a 5-unit prediction. Both linear and quadratic regression methods use linear algebra, specifically Cramer's Rule, to calculate formulas.
 
 Dependencies:
 - NumPy
