@@ -20,6 +20,25 @@ global a, b, c
 global slope, y_intercept
 
 
+# Calculates the values of an Logarithmic Regression Line equation
+# @param x - list of integer values representing data on the x-axis
+# @param y - list of integer values representing data on the y-axis
+def find_log_regression(x, y):
+    sum_of_y = find_sum(y)
+    y_lnx = 0
+    lnx = 0
+    lnx_2 = 0
+
+    for i in range(len(x)):
+        y_lnx += y[i] * np.log(x[i])
+        lnx += np.log(x[i])
+        lnx_2 += (np.log(x[i]))**2
+    
+    global a, b
+    b = ((size * y_lnx) - (sum_of_y * lnx))/((size * lnx_2) - (lnx**2))
+    a = (sum_of_y - (b * lnx))/(size)
+
+
 # Calculates the values of an Exponential Regression Line equation
 # @param x - list of integer values representing data on the x-axis
 # @param y - list of integer values representing data on the y-axis
@@ -113,6 +132,15 @@ def find_linear_regression(x, y):
     slope = l1/float(l0)
     global y_intercept
     y_intercept = l2/float(l0)
+
+
+# Calculates logarithmic prediction
+# Y(x; a,b) = a + b*ln(x)
+# @param _a - variable a of logarithmic equation
+# @param _b - variable b of logarithmic equation
+# @param i - x value
+def log_function(_a, _b, i):
+    return (_a + _b * np.log(i))
 
 
 # Calculates exponential prediction
@@ -319,8 +347,23 @@ def print_exponential():
         print(" ", n + size + 1, " : ", '%.4f' % exponential_function(a, b, n + size + 1))
 
 
+# Prints logarithmic-related data values, calculations, and predictions
+def print_log():
+    print()
+    print("Logarithmic Formula:")
+    print("Y(x; a,b) = a * b*ln(x), where:")
+    print("a = ", '%.4f' % a)
+    print("b = ", '%.4f' % b)
+    print("Giving us: Y(x; a,b) = ", '%.4f' % a, " + ", '%.4f' % b,"* ln(x)")
+    print()
+    print("Future Predictions:")
+    print("  x  |  y")
+    for n in range(5):
+        print(" ", n + size + 1, " : ", '%.4f' % log_function(a, b, n + size + 1))
+
+
 if __name__ == '__main__':
-    print("Linear, Quadratic, & Exponential Regression Algorithms [written in Python]")
+    print("Linear, Quadratic, Exponential, & Logarithmic Regression Calculator [written in Python]")
     print("By Henry Song")
     print()
 
@@ -334,8 +377,9 @@ if __name__ == '__main__':
     print("Enter 1 to calculate Linear Regression")
     print("Enter 2 to calculate Quadratic Regression")
     print("Enter 3 to calculate Exponential Regression")
+    print("Enter 4 to calculate Logarithmic Regression")
     method_option = int(input("Select option: "))
-    while method_option > 3 or method_option < 1: method_option = int(input("Please enter valid option: "))
+    while method_option > 4 or method_option < 1: method_option = int(input("Please enter valid option: "))
     print()
 
     plot_title = ""
@@ -350,6 +394,9 @@ if __name__ == '__main__':
         elif method_option == 3:
             print("Using Exponential Regression on Guam's COVID cases from March-December:")
             plot_title = "Guam's COVID cases from March-December, exponential regression"
+        elif method_option == 4:
+            print("Using Logarithmic Regression on Guam's COVID cases from March-December:")
+            plot_title = "Guam's COVID cases from March-December, logarithmic regression"
     elif data_option == 2:
         if method_option == 1:
             print("Using Linear Regression on user-entered data:")
@@ -360,10 +407,13 @@ if __name__ == '__main__':
         elif method_option == 3:
             print("Using Exponential Regression on user-entered data:")
             plot_title = "User-Entered Data, exponential regression"
+        elif method_option == 4:
+            print("Using Logarithmic Regression on user-entered data:")
+            plot_title = "User-Entered Data, logarithmic regression"
 
     if data_option == 1:
-        xData = np.asarray([1, 2, 3, 4, 5, 6, 7, 8, 9])
-        yData = np.asarray([71, 142, 167, 259, 354, 1442, 2550, 4763, 6902])
+        xData = np.asarray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        yData = np.asarray([71, 142, 167, 259, 354, 1442, 2550, 4763, 6902, 7317])
         size = len(xData)
         print_data(yData)
         if method_option == 1:
@@ -375,6 +425,9 @@ if __name__ == '__main__':
         elif method_option == 3:
             find_exponential_regression(xData, yData)
             print_exponential()
+        elif method_option == 4:
+            find_log_regression(xData, yData)
+            print_log()
         
         xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
         yData_predictions = find_regression_line(xData_predictions, yData, method_option)
@@ -398,6 +451,9 @@ if __name__ == '__main__':
         elif method_option == 3:
             find_exponential_regression(xData, yData)
             print_exponential()
+        elif method_option == 4:
+            find_log_regression(xData, yData)
+            print_log()
 
         xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
         yData_predictions = find_regression_line(xData_predictions, yData, method_option)
