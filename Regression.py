@@ -56,51 +56,37 @@ def find_exponential_regression(x, y):
 # @param x - list of integer values representing data on the x-axis
 # @param y - list of integer values representing data on the y-axis
 def find_quadratic_regression(x, y):
-    global m11
+    global m11, m12, m13, m14
     m11 = find_sum(power_vector(x, 4))
-    global m12
     m12 = find_sum(power_vector(x, 3))
-    global m13
     m13 = find_sum(power_vector(x, 2))
-    global m14
     m14 = find_sum(find_xy(power_vector(x, 2), yData))
 
-    global m21
+    global m21, m22, m23, m24
     m21 = m12
-    global m22
     m22 = m13
-    global m23
     m23 = find_sum(x)
-    global m24
     m24 = find_sum(find_xy(x, y))
 
-    global m31
+    global m31, m32, m33, m34
     m31 = m13
-    global m32
     m32 = m23
-    global m33
     m33 = size
-    global m34
     m34 = find_sum(y)
 
-    global l0
+    global l0, l1, l2, l3
     l0 = (m11 * m22 * m33) - (m11 * m23 * m32) - (m12 * m21 * m33) + (m12 * m23 * m31) + \
          (m13 * m21 * m32) - (m13 * m22 * m31)
-    global l1
     l1 = (m14 * m22 * m33) - (m14 * m23 * m32) - (m12 * m24 * m33) + (m12 * m23 * m34) + \
          (m32 * m24 * m13) - (m34 * m13 * m22)
-    global l2
     l2 = (m11 * m24 * m33) - (m11 * m23 * m34) - (m14 * m33 * m21) + (m14 * m23 * m31) + \
          (m13 * m21 * m34) - (m13 * m24 * m31)
-    global l3
     l3 = (m11 * m22 * m34) - (m11 * m24 * m32) - (m12 * m34 * m21) + (m12 * m24 * m31) + \
          (m14 * m21 * m32) - (m14 * m22 * m31)
 
-    global a
+    global a, b, c
     a = l1 / l0
-    global b
     b = l2 / l0
-    global c
     c = l3 / l0
 
 
@@ -108,29 +94,23 @@ def find_quadratic_regression(x, y):
 # @param x - list of integer values representing data on the x-axis
 # @param y - list of integer values representing data on the y-axis
 def find_linear_regression(x, y):
-    global m11
+    global m11, m12, m13
     m11 = find_sum(power_vector(x, 2))
-    global m12
     m12 = find_sum(x)
-    global m13
     m13 = find_sum(find_xy(x, y))
-    global m21
+
+    global m21, m22, m23
     m21 = m12
-    global m22
     m22 = len(x)
-    global m23
     m23 = find_sum(y)
 
-    global l0
+    global l0, l1, l2
     l0 = (m11*m22) - (m12*m21)
-    global l1
     l1 = (m13*m22) - (m12*m23)
-    global l2
     l2 = (m11*m23) - (m21*m13)
 
-    global slope
+    global slope, y_intercept
     slope = l1/float(l0)
-    global y_intercept
     y_intercept = l2/float(l0)
 
 
