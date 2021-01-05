@@ -271,7 +271,8 @@ def find_regression_line(xData_in, yData_in, option):
 def plot_data(xData_in, xData_predictions, yData_in, yData_predictions, _title):
     plt.plot(xData_in, yData_in, 'bo')
     plt.plot(xData_in, yData_in, 'b-', label='Original')
-    plt.plot(xData_predictions, yData_predictions, 'ro', label='Regression Line')
+    plt.plot(xData_predictions, yData_predictions, 'r--', label='Regression Line')
+    plt.plot(xData_predictions, yData_predictions, 'ro')
     plt.title(_title)
     plt.xlabel('x')
     plt.ylabel('y')
