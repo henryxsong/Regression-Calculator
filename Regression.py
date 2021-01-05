@@ -252,16 +252,16 @@ def find_regression_line(xData_in, yData_in, option):
     array = []
     if option == 1:
         for i in range(len(xData_in)):
-            array.append(linear_function(slope, y_intercept, i))
+            array.append(linear_function(slope, y_intercept, xData_in[i]))
     elif option == 2:
         for i in range(len(xData_in)):
-            array.append(quadratic_function(a, b, c, i))
+            array.append(quadratic_function(a, b, c, xData_in[i]))
     elif option == 3:
         for i in range(len(xData_in)):
-            array.append(exponential_function(a, b, i))
+            array.append(exponential_function(a, b, xData_in[i]))
     elif option == 4:
         for i in range(len(xData_in)):
-            array.append(log_function(a, b, i))
+            array.append(log_function(a, b, xData_in[i]))
     return np.asarray(array)
 
 
