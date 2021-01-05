@@ -259,6 +259,9 @@ def find_regression_line(xData_in, yData_in, option):
     elif option == 3:
         for i in range(len(xData_in)):
             array.append(exponential_function(a, b, i))
+    elif option == 4:
+        for i in range(len(xData_in)):
+            array.append(log_function(a, b, i))
     return np.asarray(array)
 
 
