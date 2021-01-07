@@ -258,6 +258,40 @@ def plot_data(xData_in, xData_predictions, yData_in, yData_predictions, _title):
     plt.ylabel('y')
     plt.legend()
     plt.show()
+
+
+
+def clear_all_global():
+    global size
+    global m11, m12, m13, m14
+    global m21, m22, m23, m24
+    global m31, m32, m33, m34
+    global l0, l1, l2, l3
+    global a, b, c
+    global slope, y_intercept
+
+    size = 0
+    m11 = 0
+    m12 = 0
+    m13 = 0
+    m14 = 0
+    m21 = 0
+    m22 = 0
+    m23 = 0
+    m24 = 0
+    m31 = 0
+    m32 = 0
+    m33 = 0
+    m34 = 0
+    l0 = 0
+    l1 = 0
+    l2 = 0
+    l3 = 0
+    a = 0
+    b = 0
+    c = 0
+    slope = 0
+    y_intercept = 0
     
 
 # Print data values of a vector
@@ -351,98 +385,108 @@ if __name__ == '__main__':
     print("By Henry Song")
     print()
 
-    print("Enter 1 to use hard-coded data for Guam's COVID cases from March-December")
-    print("Enter 2 to use user-input data")
-    # print("Enter 3 to CovidTracking.com API data")
-    data_option = int(input("Select option: "))
-    while data_option > 2 or data_option < 1: data_option = int(input("Please enter valid option: "))
-    print()
+    loop_boolean = True
 
-    print("Enter 1 to calculate Linear Regression")
-    print("Enter 2 to calculate Quadratic Regression")
-    print("Enter 3 to calculate Exponential Regression")
-    print("Enter 4 to calculate Logarithmic Regression")
-    method_option = int(input("Select option: "))
-    while method_option > 4 or method_option < 1: method_option = int(input("Please enter valid option: "))
-    print()
-
-    plot_title = ""
-
-    if data_option == 1:
-        if method_option == 1:
-            print("Using Linear Regression on Guam's COVID cases from March-December:")
-            plot_title = "Guam's COVID cases from March-December, linear regression"
-        elif method_option == 2:
-            print("Using Quadratic Regression on Guam's COVID cases from March-December:")
-            plot_title = "Guam's COVID cases from March-December, quadratic regression"
-        elif method_option == 3:
-            print("Using Exponential Regression on Guam's COVID cases from March-December:")
-            plot_title = "Guam's COVID cases from March-December, exponential regression"
-        elif method_option == 4:
-            print("Using Logarithmic Regression on Guam's COVID cases from March-December:")
-            plot_title = "Guam's COVID cases from March-December, logarithmic regression"
-    elif data_option == 2:
-        if method_option == 1:
-            print("Using Linear Regression on user-entered data:")
-            plot_title = "User-Entered Data, linear regression"
-        elif method_option == 2:
-            print("Using Quadratic Regression on user-entered data:")
-            plot_title = "User-Entered Data, quadratic regression"
-        elif method_option == 3:
-            print("Using Exponential Regression on user-entered data:")
-            plot_title = "User-Entered Data, exponential regression"
-        elif method_option == 4:
-            print("Using Logarithmic Regression on user-entered data:")
-            plot_title = "User-Entered Data, logarithmic regression"
-
-    if data_option == 1:
-        xData = np.asarray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-        yData = np.asarray([71, 142, 167, 259, 354, 1442, 2550, 4763, 6902, 7317])
-        size = len(xData)
-        print_data(yData)
-        if method_option == 1:
-            find_linear_regression(xData, yData)
-            print_linear()
-        elif method_option == 2:
-            find_quadratic_regression(xData, yData)
-            print_quadratic()
-        elif method_option == 3:
-            find_exponential_regression(xData, yData)
-            print_exponential()
-        elif method_option == 4:
-            find_log_regression(xData, yData)
-            print_log()
-        
-        xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
-        yData_predictions = find_regression_line(xData_predictions, yData, method_option)
-
-        plot_option = str(input("Plot data (y/n): "))
-        while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
-        if plot_option[0] == "y":
-            plot_data(xData, xData_predictions, yData, yData_predictions, plot_title)
-    elif data_option == 2:
-        yData = np.asarray(list(read_data()))
-        xData = np.asarray(list(find_x_data(len(yData), 0)))
-        size = len(xData)
+    while loop_boolean:
         print()
-        print_data(yData)
-        if method_option == 1:
-            find_linear_regression(xData, yData)
-            print_linear()
-        elif method_option == 2:
-            find_quadratic_regression(xData, yData)
-            print_quadratic()
-        elif method_option == 3:
-            find_exponential_regression(xData, yData)
-            print_exponential()
-        elif method_option == 4:
-            find_log_regression(xData, yData)
-            print_log()
+        print("Enter 1 to use hard-coded data for Guam's COVID cases from March-December")
+        print("Enter 2 to use user-input data")
+        # print("Enter 3 to CovidTracking.com API data")
+        data_option = int(input("Select option: "))
+        while data_option > 2 or data_option < 1: data_option = int(input("Please enter valid option: "))
+        print()
 
-        xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
-        yData_predictions = find_regression_line(xData_predictions, yData, method_option)
+        print("Enter 1 to calculate Linear Regression")
+        print("Enter 2 to calculate Quadratic Regression")
+        print("Enter 3 to calculate Exponential Regression")
+        print("Enter 4 to calculate Logarithmic Regression")
+        method_option = int(input("Select option: "))
+        while method_option > 4 or method_option < 1: method_option = int(input("Please enter valid option: "))
+        print()
 
-        plot_option = str(input("Plot data (y/n): "))
-        while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
-        if plot_option[0] == "y":
-            plot_data(xData, xData_predictions, yData, yData_predictions, plot_title)
+        plot_title = ""
+
+        if data_option == 1:
+            if method_option == 1:
+                print("Using Linear Regression on Guam's COVID cases from March-December:")
+                plot_title = "Guam's COVID cases from March-December, linear regression"
+            elif method_option == 2:
+                print("Using Quadratic Regression on Guam's COVID cases from March-December:")
+                plot_title = "Guam's COVID cases from March-December, quadratic regression"
+            elif method_option == 3:
+                print("Using Exponential Regression on Guam's COVID cases from March-December:")
+                plot_title = "Guam's COVID cases from March-December, exponential regression"
+            elif method_option == 4:
+                print("Using Logarithmic Regression on Guam's COVID cases from March-December:")
+                plot_title = "Guam's COVID cases from March-December, logarithmic regression"
+        elif data_option == 2:
+            if method_option == 1:
+                print("Using Linear Regression on user-entered data:")
+                plot_title = "User-Entered Data, linear regression"
+            elif method_option == 2:
+                print("Using Quadratic Regression on user-entered data:")
+                plot_title = "User-Entered Data, quadratic regression"
+            elif method_option == 3:
+                print("Using Exponential Regression on user-entered data:")
+                plot_title = "User-Entered Data, exponential regression"
+            elif method_option == 4:
+                print("Using Logarithmic Regression on user-entered data:")
+                plot_title = "User-Entered Data, logarithmic regression"
+
+        if data_option == 1:
+            xData = np.asarray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+            yData = np.asarray([71, 142, 167, 259, 354, 1442, 2550, 4763, 6902, 7317])
+            size = len(xData)
+            print_data(yData)
+            if method_option == 1:
+                find_linear_regression(xData, yData)
+                print_linear()
+            elif method_option == 2:
+                find_quadratic_regression(xData, yData)
+                print_quadratic()
+            elif method_option == 3:
+                find_exponential_regression(xData, yData)
+                print_exponential()
+            elif method_option == 4:
+                find_log_regression(xData, yData)
+                print_log()
+            
+            xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
+            yData_predictions = find_regression_line(xData_predictions, yData, method_option)
+
+            plot_option = str(input("Plot data (y/n): "))
+            while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
+            if plot_option[0] == "y":
+                plot_data(xData, xData_predictions, yData, yData_predictions, plot_title)
+        elif data_option == 2:
+            yData = np.asarray(list(read_data()))
+            xData = np.asarray(list(find_x_data(len(yData), 0)))
+            size = len(xData)
+            print()
+            print_data(yData)
+            if method_option == 1:
+                find_linear_regression(xData, yData)
+                print_linear()
+            elif method_option == 2:
+                find_quadratic_regression(xData, yData)
+                print_quadratic()
+            elif method_option == 3:
+                find_exponential_regression(xData, yData)
+                print_exponential()
+            elif method_option == 4:
+                find_log_regression(xData, yData)
+                print_log()
+
+            xData_predictions = np.asarray(list(find_x_data(len(yData), 5)))
+            yData_predictions = find_regression_line(xData_predictions, yData, method_option)
+
+            plot_option = str(input("Plot data (y/n): "))
+            while plot_option not in ("y", "n"): plot_option = input("Please enter valid option (y/n): ")
+            if plot_option[0] == "y":
+                plot_data(xData, xData_predictions, yData, yData_predictions, plot_title)
+        
+        loop_option = str(input("Calculate another data set (y/n): "))
+        while loop_option not in ("y", "n"): loop_option = input("Please enter valid option (y/n): ")
+        if loop_option[0] == "n":
+            loop_boolean = False
+        clear_all_global()
